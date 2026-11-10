@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ site.name }}{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Unbounded:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="logo" href="/">{{ site.name }}</a>
+    <nav>
+      <a href="/#uslugi">Услуги</a>
+      <a href="/#kontakty">Контакты</a>
+      <a class="tel" href="tel:{{ site.phone|replace(' ','')|replace('(','')|replace(')','')|replace('-','') }}">{{ site.phone }}</a>
+      <!-- <div style="position:relative;overflow:hidden;"><a href="https://yandex.ru/maps/11469/feodosia/?utm_medium=mapframe&utm_source=maps" style="color:#eee;font-size:12px;position:absolute;top:0px;">Феодосия</a><a href="https://yandex.ru/maps/11469/feodosia/?ll=35.391286%2C45.065681&mode=whatshere&utm_medium=mapframe&utm_source=maps&whatshere%5Bpoint%5D=35.389642%2C45.064864&whatshere%5Bzoom%5D=17.09&z=17.09" style="color:#eee;font-size:12px;position:absolute;top:14px;">Геологическая улица, 18 — Яндекс Карты</a><iframe src="https://yandex.ru/map-widget/v1/?ll=35.391286%2C45.065681&mode=whatshere&whatshere%5Bpoint%5D=35.389642%2C45.064864&whatshere%5Bzoom%5D=17.09&z=17.09" width="560" height="400" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe></div> -->
+    </nav>
+  </header>
+  <main>{% block content %}{% endblock %}</main>
+  <footer id="kontakty">
+    <div>
+      <strong>{{ site.name }}</strong>
+      <p>{{ site.address }}<br>{{ site.hours }}</p>
+    </div>
+    <p><a href="/privacy">Политика обработки персональных данных</a></p>
+  </footer>
+</body>
+</html>

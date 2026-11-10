@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div class="intro">
+    <h1>Кузовной ремонт в Феодосии</h1>
+    <p>Отметьте, что нужно сделать и мы перезвоним.</p>
+    <dl class="facts">
+      <div><dt>Адрес</dt><dd>{{ site.address }}</dd></div>
+      <div><dt>Работаем</dt><dd>{{ site.hours }}</dd></div>
+    </dl>
+    {% include "_body.html" %}
+  </div>
+
+  <form class="order" id="order" method="post" action="/zapis" novalidate>
+    <h2>Заказ-наряд</h2>
+    {% if errors %}
+    <ul class="errors" role="alert">{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul>
+    {% endif %}
+
+    <fieldset>
+      <legend>Перечень</legend>
+      {% for s in services %}
+      <label class="row">
+        <input type="checkbox" name="services" value="{{ s.slug }}"
+               data-price="{{ s.price_from }}" data-minutes="{{ s.minutes }}"
+               {% if s.slug in selected %}checked{% endif %}>
+        <span class="t">{{ s.title }}</span>
+        <span class="d">{{ s.hours }} ч</span>
+        <span class="p">от {{ '{:,}'.format(s.price_from).replace(',', ' ') }} {{ site.currency }}</span>
+      </label>
+      {% endfor %}
+    </fieldset>
+
+   <fieldset class="chosen">
+      <legend>Покраска деталей</legend>
+      <ul id="chosen" aria-live="polite"></ul>
+    </fieldset>
+
+    <div class="total">
+      <span>Итого</span>
+      <span><b id="sum">—</b> <small id="time"></small></span>
+    </div>
+
+    <div class="fields">
+      <label>Имя<input name="name" autocomplete="name" value="{{ form.name }}" required></label>
+      <label>Телефон<input name="phone" type="tel" autocomplete="tel" value="{{ form.phone }}" required></label>
+      <label>Марка и модель<input name="car" placeholder="Skoda Octavia, 2017" value="{{ form.car }}" required></label>
+      <label>Удобная дата<input name="visit_date" type="date" min="{{ today }}" value="{{ form.visit_date }}"></label>
+    </div>
+
+    <label class="consent">
+      <input type="checkbox" name="consent" value="1" required>
+      <span>Согласен на <a href="/privacy" target="_blank">обработку персональных данных</a></span>
+    </label>
+    <button type="submit">Записаться</button>
+  </form>
+</section>
+
+<section class="catalog" id="uslugi">
+  <h2>Услуги и цены</h2>
+  <ul>
+    {% for s in services %}
+    <li>
+      <a href="/uslugi/{{ s.slug }}">
+        <span class="t">{{ s.title }}</span>
+        <span class="s">{{ s.summary }}</span>
+        <span class="p">от {{ '{:,}'.format(s.price_from).replace(',', ' ') }} {{ site.currency }}</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+
+<script src="/static/app.js" defer></script>
+</body>
+</html>
+{% endblock %}

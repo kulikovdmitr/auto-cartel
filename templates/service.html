@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}{{ item.title }} — {{ site.name }}{% endblock %}
+{% block content %}
+<article class="service">
+  <p class="back"><a href="/#uslugi">Все услуги</a></p>
+  <h1>{{ item.title }}</h1>
+  <p class="lead">{{ item.summary }}</p>
+  <p class="price">от {{ '{:,}'.format(item.price_from).replace(',', ' ') }} {{ site.currency }}, около {{ item.minutes }} мин</p>
+  <h2>Что входит</h2>
+  <ul class="includes">{% for i in item.includes %}<li>{{ i }}</li>{% endfor %}</ul>
+  <a class="btn" href="/?service={{ item.slug }}#order">Записаться на эту услугу</a>
+</article>
+{% endblock %}
